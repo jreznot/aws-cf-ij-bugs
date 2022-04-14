@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  ApiGatewayApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      # Allows www.example.com to call these APIs
+      # SAM will automatically add AllowMethods with a list of methods for this API
+      Cors: "'www.example.com'"
+      Domain:
+        DomainName: www.example.com
+          CertificateArn: arn-example
+          EndpointConfiguration: EDGE
+          Route53:
+            HostedZoneId: Z1PA6795UKMFR9
+          BasePath:
+            - foo
+            - bar
+      DefinitionBody: # Pull in an OpenApi definition from S3
+        'Fn::Transform':
+          Name: 'AWS::Include'
+          # Replace "bucket" with your bucket name
+          Parameters:
+            Location: 's3://bucket/swagger.yaml'
