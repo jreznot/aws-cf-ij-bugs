@@ -1,0 +1,8 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  SampleWebACLAssociation:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      CapacityRebalance: true
+      MaxSize: 10
+      MinSize: 10
